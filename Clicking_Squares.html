@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            background-color: purple;
+            position: absolute;
+        }
+    </style>
+    <title>Moveable Squares</title>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        let squareCount = 0;
+
+        document.addEventListener('click', createOrMoveSquare);
+
+        function createOrMoveSquare(event) {
+            const container = document.getElementById('container');
+            const square = document.createElement('div');
+            
+            square.className = 'square';
+            square.style.left = `${event.clientX - 25}px`;
+            square.style.top = `${event.clientY - 25}px`;
+
+            if (squareCount > 0) {
+                moveSquare(square);
+            } else {
+                container.appendChild(square);
+            }
+
+            squareCount++;
+        }
+
+        function moveSquare(square) {
+            const container = document.getElementById('container');
+            const maxX = container.clientWidth - 50;
+            const maxY = container.clientHeight - 50;
+
+            let newX = parseInt(square.style.left) + 50;
+            let newY = parseInt(square.style.top) + 50;
+
+            if (newX > maxX) {
+                newX = 0;
+            }
+
+            if (newY > maxY) {
+                newY = 0;
+            }
+
+            square.style.left = `${newX}px`;
+            square.style.top = `${newY}px`;
+
+            container.appendChild(square);
+        }
+    </script>
+</body>
+</html>
